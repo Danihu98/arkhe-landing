@@ -1,0 +1,333 @@
+/* Páginas propias de arkheapp.cl: /condiciones/ y /privacidad/, y después /pagar/ y /pago/.
+   Llevan una CSP con style-src 'self': sin recursos externos, sin estilos en línea y sin Google Fonts.
+   Usan los colores de la portada (landing/index.html) y las letras que la portada declara como
+   respaldo de sus fuentes de Google. Se leen bien en el teléfono (16 px de margen, sin desplazamiento
+   horizontal) y se pueden imprimir o guardar en PDF.
+   Ninguna letra baja de 16 px (1rem): la Ley 19.496 (art. 17) pide letra de 2,5 mm o más en los
+   contratos de adhesión, y el SERNAC pide que se cumpla en la vista por defecto. */
+
+/* ————— Colores y letras (los de la portada) ————— */
+:root {
+  color-scheme: light;
+  --papel: #eee8de;
+  --papel-claro: #f7f4ee;
+  --blanco: #ffffff;
+  --tinta: #23201b;
+  --tinta-2: #5a5349;
+  --filete: #cfc6b7;
+  --salvia: #3f5240;
+  --salvia-oscura: #2f3f31;
+  --salvia-clara: #dce3d6;
+  --terracota: #a04b2e;
+  --terracota-trazo: #b5583a;
+  --arcilla: #eadbcf;
+  --terracota-oscura: #8f4129;
+  --rosa: #8e4652;
+
+  /* Los respaldos que declara la portada, sin sus fuentes de Google
+     («Instrument Sans respaldo» de la portada es Arial o Liberation Sans) */
+  --display: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --titling: Georgia, serif;
+  --texto: Georgia, "Times New Roman", serif;
+  --ui: Arial, "Liberation Sans", "Segoe UI", system-ui, sans-serif;
+
+  --gut-l: max(16px, env(safe-area-inset-left, 0px));
+  --gut-r: max(16px, env(safe-area-inset-right, 0px));
+  --ancho: 46rem; /* contenedor de lectura, con su margen: unas 70 letras por línea */
+}
+@media (min-width: 640px) {
+  :root {
+    --gut-l: max(40px, env(safe-area-inset-left, 0px));
+    --gut-r: max(40px, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* ————— Base ————— */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font: 400 1.125rem/1.6 var(--ui);
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 900px) { body { font-size: 1.1875rem; } }
+img, svg { max-width: 100%; height: auto; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--salvia); outline-offset: 2px; }
+::selection { background: var(--salvia-clara); color: var(--tinta); }
+
+/* Solo para lectores de pantalla */
+.solo-lector {
+  position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+/* Solo en papel (por ejemplo, la dirección de la página) */
+.solo-impresion { display: none; }
+
+/* «Saltar al contenido»: aparece al llegar con el teclado */
+.saltar {
+  position: absolute; z-index: 10; top: 8px; left: var(--gut-l);
+  padding: 12px 16px; border-radius: 4px;
+  background: var(--tinta); color: var(--blanco);
+  font: 600 1rem/1.2 var(--ui); text-decoration: none;
+  transform: translateY(-200%);
+}
+.saltar:focus { transform: none; }
+
+/* ————— Cabecera del sitio (no es fija: no tapa nada al leer ni al imprimir) ————— */
+.sitio { border-bottom: 1px solid var(--filete); }
+.sitio-cont {
+  max-width: var(--ancho); margin-inline: auto;
+  padding: 8px var(--gut-r) 8px var(--gut-l);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 24px;
+}
+.marca {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font: 400 1.0625rem/1 var(--titling); letter-spacing: 0.2em; text-decoration: none;
+}
+.marca:hover { text-decoration: underline; text-underline-offset: 6px; }
+.sitio nav { display: flex; flex-wrap: wrap; gap: 0 24px; font: 500 1rem/1.3 var(--ui); }
+.sitio nav a { display: inline-flex; align-items: center; min-height: 48px; text-decoration: none; }
+.sitio nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.sitio nav a[aria-current="page"] {
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px;
+  text-decoration-color: var(--terracota);
+}
+
+/* ————— Contenedor de lectura ————— */
+.hoja {
+  max-width: var(--ancho); margin-inline: auto;
+  padding: 40px var(--gut-r) 72px var(--gut-l);
+}
+.cabeza-doc { display: grid; gap: 12px; margin-bottom: 32px; }
+.cabeza-doc > * { margin: 0; }
+
+/* ————— Títulos y texto ————— */
+.antetitulo {
+  margin: 0; color: var(--tinta-2);
+  font: 400 1rem/1.45 var(--titling); letter-spacing: 0.14em; text-transform: uppercase;
+}
+h1, h2, h3 { text-wrap: balance; }
+h1 {
+  margin: 0;
+  font: 400 clamp(2.25rem, 1.5rem + 3.2vw, 3.5rem)/1.06 var(--display); letter-spacing: -0.01em;
+}
+.version { margin: 0; color: var(--tinta-2); font: 400 1rem/1.5 var(--ui); }
+.hoja h2 {
+  margin: 56px 0 16px; padding-top: 24px; border-top: 1px solid var(--filete);
+  font: 400 clamp(1.625rem, 1.3rem + 1.2vw, 2.125rem)/1.18 var(--display);
+  scroll-margin-top: 16px;
+}
+/* Terracota oscura en números y viñetas: 5,8:1 sobre --papel (la terracota de la portada da 4,9:1) */
+.hoja h2 .num { color: var(--terracota-oscura); margin-right: 0.12em; }
+.hoja h3 { margin: 32px 0 8px; font: 700 1.1875rem/1.35 var(--ui); scroll-margin-top: 16px; }
+.hoja p { margin: 0 0 16px; text-wrap: pretty; }
+.hoja ul, .hoja ol { margin: 0 0 16px; padding-left: 1.4em; }
+.hoja li { margin: 0 0 8px; padding-left: 0.2em; }
+.hoja li::marker { color: var(--terracota-oscura); }
+.hoja li > p:last-child { margin-bottom: 0; }
+strong, b { font-weight: 700; }
+.bajada { font-size: 1.1875rem; line-height: 1.55; }
+@media (min-width: 900px) { .bajada { font-size: 1.25rem; } }
+.nota { font-size: 1rem; line-height: 1.55; color: var(--tinta-2); }
+/* Direcciones web y correos largos: se cortan antes de salirse de la pantalla */
+a.url, .fuentes a { overflow-wrap: anywhere; }
+
+/* ————— Recuadro destacado ————— */
+.recuadro {
+  margin: 24px 0 32px; padding: 20px 20px 4px;
+  background: var(--papel-claro);
+  border: 1px solid var(--filete); border-left: 6px solid var(--salvia); border-radius: 4px;
+}
+.recuadro > :last-child { margin-bottom: 16px; }
+.hoja .recuadro h2, .hoja .recuadro h3 {
+  margin: 0 0 12px; padding: 0; border: 0;
+  font: 700 1.25rem/1.3 var(--ui);
+}
+.recuadro-titulo { font-size: 1.1875rem; line-height: 1.5; }
+/* El fuerte: derecho a retracto y avisos que no se pueden pasar por alto */
+.recuadro--destacado {
+  background: var(--arcilla);
+  border: 2px solid var(--terracota); border-left-width: 6px;
+}
+.recuadro--destacado li::marker { color: var(--terracota-oscura); }
+
+/* ————— Índice ————— */
+.indice { margin: 32px 0 8px; }
+.hoja .indice h2 {
+  margin: 0 0 8px; padding: 0; border: 0; color: var(--tinta-2);
+  font: 700 1rem/1.4 var(--ui); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.indice ol { margin: 0; padding-left: 1.75em; columns: 2 17rem; column-gap: 40px; }
+.indice li { margin: 0; break-inside: avoid; }
+.indice a { display: inline-block; padding: 8px 0; }
+
+/* ————— Fichas de datos: <dl> con un <div> por fila ————— */
+.ficha { margin: 16px 0 24px; border-top: 1px solid var(--filete); }
+.ficha > div {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px 24px;
+  padding: 12px 0; border-bottom: 1px solid var(--filete);
+}
+.ficha dt { font-weight: 700; }
+.ficha dd { margin: 0; min-width: 0; }
+.ficha dd > p { margin: 0 0 8px; }
+.ficha dd > :last-child { margin-bottom: 0; }
+@media (min-width: 640px) {
+  .ficha > div { grid-template-columns: 12rem minmax(0, 1fr); }
+}
+
+/* Tarjetas: un tipo de dato, un plan, un estado */
+.dato {
+  margin: 24px 0; padding: 20px 20px 8px;
+  background: var(--papel-claro); border: 1px solid var(--filete); border-radius: 4px;
+}
+.hoja .dato h3 { margin-top: 0; }
+.dato .ficha { margin: 8px 0 12px; }
+.dato .ficha > div:last-child { border-bottom: 0; }
+@media (min-width: 640px) {
+  .dato .ficha > div { grid-template-columns: 9.5rem minmax(0, 1fr); }
+}
+
+/* Precios */
+.precios { display: grid; gap: 12px; margin: 16px 0 24px; }
+.precio {
+  margin: 0; padding: 16px 20px;
+  background: var(--papel-claro); border: 1px solid var(--filete); border-radius: 4px;
+}
+.precio dt { font: 700 1.125rem/1.3 var(--ui); }
+.precio dd { margin: 4px 0 0; }
+.monto {
+  display: block; margin: 4px 0;
+  font: 600 clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem)/1.15 var(--ui);
+  letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+}
+
+/* Normas y fuentes citadas */
+.fuentes { font-size: 1rem; line-height: 1.55; }
+
+/* ————— Botones ————— */
+.acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin: 24px 0; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 12px 24px; border: 0; border-radius: 4px;
+  background: var(--salvia); color: var(--blanco);
+  font: 600 1.0625rem/1.2 var(--ui); text-align: center; text-decoration: none; text-wrap: balance;
+  cursor: pointer;
+}
+.btn:hover { background: var(--salvia-oscura); }
+.btn-linea { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1px var(--tinta); }
+.btn-linea:hover { background: var(--tinta); color: var(--blanco); }
+.btn-chico { min-height: 44px; padding: 10px 16px; font-size: 1rem; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
+.btn:disabled:hover { background: var(--salvia); }
+@media (max-width: 639px) {
+  .acciones .btn { width: 100%; }
+}
+
+/* ————— Formularios (para /pagar/) ————— */
+.campo { display: grid; gap: 8px; margin: 0 0 20px; min-width: 0; }
+fieldset.campo { border: 0; padding: 0; }
+.campo > label, .campo > legend { padding: 0; font: 700 1rem/1.35 var(--ui); }
+.campo input[type="email"], .campo input[type="text"], .campo input[type="tel"] {
+  width: 100%; min-height: 48px; padding: 10px 14px;
+  background: var(--blanco); color: var(--tinta);
+  border: 1px solid var(--tinta-2); border-radius: 4px;
+  font: 400 1.125rem/1.3 var(--ui);
+}
+.campo input:focus-visible { outline: 3px solid var(--salvia); outline-offset: 1px; }
+.ayuda { font: 400 1rem/1.45 var(--ui); color: var(--tinta-2); }
+.error { font: 700 1rem/1.45 var(--ui); color: var(--terracota-oscura); }
+/* Opciones grandes (por ejemplo, el plan): toda la tarjeta se puede tocar */
+.opciones { display: grid; gap: 12px; }
+.opcion {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: start;
+  padding: 16px; border: 1px solid var(--tinta-2); border-radius: 4px;
+  background: var(--blanco); cursor: pointer;
+}
+.opcion input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--salvia); }
+.opcion:has(input:checked) { border-color: var(--salvia); box-shadow: inset 0 0 0 2px var(--salvia); }
+.opcion:has(input:focus-visible) { outline: 3px solid var(--salvia); outline-offset: 2px; }
+
+/* Casilla para aceptar (las condiciones, el aviso de privacidad, el cobro automático): sin marcar
+   de antemano, de 24 px y con toda la fila tocable (48 px de alto o más) */
+.casilla {
+  display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: start;
+  min-height: 48px; margin: 0 0 16px; padding: 12px 16px;
+  border: 1px solid var(--tinta-2); border-radius: 4px; background: var(--blanco);
+  font: 400 1rem/1.5 var(--ui); cursor: pointer;
+}
+.casilla input[type="checkbox"] { width: 24px; height: 24px; margin: 0; accent-color: var(--salvia); cursor: pointer; }
+.casilla:has(input:checked) { border-color: var(--salvia); box-shadow: inset 0 0 0 1px var(--salvia); }
+.casilla:has(input:focus-visible) { outline: 3px solid var(--salvia); outline-offset: 2px; }
+
+/* El contorno de foco pasa del botón a la tarjeta o la fila solo donde :has() funciona.
+   Sin :has() (por ejemplo, Firefox antes de la 121) el botón conserva su contorno. */
+@supports selector(:has(*)) {
+  .opcion input:focus-visible, .casilla input:focus-visible { outline: none; }
+}
+
+/* Mensajes de estado (role="status") */
+.estado { margin: 16px 0; font: 700 1.0625rem/1.5 var(--ui); }
+.estado--ok { color: var(--salvia-oscura); }
+.estado--error { color: var(--terracota-oscura); }
+
+/* ————— Pie ————— */
+.pie { border-top: 1px solid var(--filete); background: var(--papel-claro); }
+.pie-cont {
+  max-width: var(--ancho); margin-inline: auto;
+  padding: 32px var(--gut-r) 48px var(--gut-l);
+  display: grid; gap: 12px;
+  font: 400 1rem/1.6 var(--ui); color: var(--tinta-2);
+}
+.pie-cont p { margin: 0; }
+.pie-cont strong { color: var(--tinta); }
+.pie nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.pie nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--tinta); }
+
+/* ————— Movimiento: solo si la persona no pidió reducirlo ————— */
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .sitio nav a, .marca { transition: background-color 0.15s ease, color 0.15s ease; }
+}
+
+/* ————— Alto contraste de Windows ————— */
+@media (forced-colors: active) {
+  .recuadro, .dato, .precio { border: 2px solid CanvasText; }
+  .btn { border: 2px solid ButtonText; }
+}
+
+/* ————— Impresión y «Guardar como PDF» ————— */
+@media print {
+  @page { margin: 18mm 16mm; }
+  html { font-size: 11pt; }
+  body { background: #fff; color: #000; font-size: 1.125rem; line-height: 1.45; }
+  .saltar, .sitio nav, .indice, .acciones, .btn, .no-imprimir, .pie nav { display: none !important; }
+  .solo-impresion { display: block; }
+  .sitio { border-bottom: 1pt solid #000; }
+  .sitio-cont, .hoja, .pie-cont { max-width: none; padding-inline: 0; }
+  .sitio-cont { padding-block: 0 4pt; }
+  .marca { min-height: 0; }
+  .hoja { padding-block: 12pt 0; }
+  h1 { font-size: 22pt; }
+  .hoja h2 { margin-top: 18pt; padding-top: 8pt; border-top: 0.75pt solid #777; font-size: 15pt; }
+  .hoja h2 .num { color: #000; }
+  .hoja h3 { margin-top: 12pt; font-size: 12.5pt; }
+  h1, h2, h3, dt { break-after: avoid; page-break-after: avoid; }
+  p, li, dd { orphans: 3; widows: 3; }
+  .recuadro, .dato, .precio, .ficha > div { break-inside: avoid; page-break-inside: avoid; }
+  .recuadro, .dato, .precio, .pie { background: #fff !important; }
+  .recuadro { border: 1pt solid #000; border-left-width: 4pt; }
+  .recuadro--destacado { border: 2pt solid #000; border-left-width: 6pt; }
+  .dato, .precio { border: 0.75pt solid #777; }
+  .ficha, .ficha > div { border-color: #999; }
+  .version, .nota, .antetitulo, .pie-cont { color: #000; }
+  a { color: #000; text-decoration: underline; }
+  /* Los enlaces cuyo texto no es su dirección la muestran en papel; class="url" = el texto ya la dice */
+  a[href^="http"]:not(.url)::after { content: " (" attr(href) ")"; font-size: 0.9em; overflow-wrap: anywhere; }
+  .pie { border-top: 1pt solid #000; }
+  .pie-cont { padding-block: 10pt 0; }
+}

@@ -1,0 +1,119 @@
+/* /pagar/ y /pago/: lo que paginas.css (compartido con /condiciones/ y /privacidad/) no trae.
+   Misma CSP que allá: sin recursos externos y sin estilos en línea. Ninguna letra baja de 16 px,
+   y en el teléfono todo lo que se toca mide 44 px o más. */
+
+/* ————— Títulos de cada paso: más livianos que los de un documento largo ————— */
+.pagar .cabeza-doc { margin-bottom: 24px; }
+.pagar h2.paso {
+  margin: 40px 0 16px; padding-top: 0; border-top: 0;
+  font: 400 clamp(1.5rem, 1.25rem + 1vw, 1.875rem)/1.2 var(--display);
+}
+/* Lo que recibe el foco solo por código (títulos y mensajes con tabindex="-1", para que el lector de
+   pantalla los lea) no se alcanza con Tab: un anillo ahí solo confunde a quien mira. */
+.pagar [tabindex="-1"]:focus, .pagar [tabindex="-1"]:focus-visible { outline: none; }
+
+/* Sin sesión: aire entre los planes y el aviso de privacidad */
+#entrar { margin-top: 24px; }
+
+/* ————— La cuenta con que se entró ————— */
+.cuenta { margin: 0 0 8px; font: 400 1rem/1.5 var(--ui); color: var(--tinta-2); }
+.cuenta strong { color: var(--tinta); }
+/* Un correo largo se corta antes de salirse de la pantalla del teléfono */
+.correo { overflow-wrap: anywhere; }
+
+/* ————— Planes: toda la tarjeta se toca (paginas.css, .opcion) ————— */
+.planes { margin-bottom: 8px; }
+@media (min-width: 720px) {
+  .planes .opciones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.opcion-cuerpo { display: grid; gap: 4px; min-width: 0; }
+.opcion-nombre { font: 700 1.125rem/1.3 var(--ui); }
+.opcion-precio {
+  font: 600 1.625rem/1.2 var(--ui); letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+}
+.opcion-unidad { font: 400 1rem/1.3 var(--ui); letter-spacing: 0; color: var(--tinta-2); }
+.opcion-detalle { font: 400 1rem/1.45 var(--ui); color: var(--tinta-2); }
+fieldset:disabled .opcion { cursor: progress; opacity: 0.7; }
+
+#ya-suscrita { margin-top: 24px; }
+
+/* ————— Correo de Mercado Pago ————— */
+.campo-correo { margin-top: 16px; }
+
+/* ————— Resumen de la compra ————— */
+.resumen { margin-top: 0; }
+.resumen .total { font-weight: 700; }
+.reglas { margin: 0 0 24px; }
+.pagar .reglas h3 { margin-top: 0; }
+
+/* ————— «¿No es tu cuenta? Cambiar»: un botón con aspecto de enlace, alto para el dedo ————— */
+.cambiar { margin: 8px 0 8px; }
+.enlace-boton {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0;
+  background: none; border: 0; color: var(--tinta);
+  font: 500 1rem/1.3 var(--ui); text-align: left;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+  cursor: pointer;
+}
+.enlace-boton:hover { text-decoration-thickness: 2px; }
+
+/* ————— Cargando ————— */
+.cargando { display: flex; align-items: center; gap: 12px; color: var(--tinta-2); font-weight: 400; }
+.cargando::before {
+  content: ""; flex: none; width: 18px; height: 18px;
+  border: 3px solid var(--filete); border-top-color: var(--salvia); border-radius: 50%;
+}
+
+/* ————— Botón ocupado: bloqueado, pero se lee qué está pasando ————— */
+.btn[aria-busy="true"]:disabled, .btn[aria-busy="true"]:disabled:hover {
+  opacity: 0.85; cursor: progress; background: var(--salvia); color: var(--blanco);
+}
+.btn-linea[aria-busy="true"]:disabled, .btn-linea[aria-busy="true"]:disabled:hover {
+  background: transparent; color: var(--tinta);
+}
+.btn[aria-busy="true"]::before {
+  content: ""; flex: none; width: 16px; height: 16px;
+  border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
+}
+.btn-linea:disabled:hover { background: transparent; color: var(--tinta); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .cargando::before, .btn[aria-busy="true"]::before { animation: girar 0.9s linear infinite; }
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* ————— Mensajes ————— */
+.estado--aviso { color: var(--tinta); }
+
+/* ————— Tarjeta «Tu suscripción mensual» ————— */
+.tarjeta-suscripcion { margin: 16px 0 8px; }
+.pagar .tarjeta-suscripcion h2.paso { margin-top: 0; }
+.pagar .tarjeta-suscripcion h3 { margin-top: 0; }
+.tarjeta-suscripcion .acciones { margin: 16px 0 20px; }
+.tarjeta-suscripcion .recuadro { margin: 16px 0 20px; }
+
+/* ————— /pago/: el resultado del pago ————— */
+.resultado {
+  margin: 0 0 24px; padding: 20px 20px 4px;
+  background: var(--papel-claro);
+  border: 1px solid var(--filete); border-left: 6px solid var(--tinta-2); border-radius: 4px;
+}
+.resultado p { margin: 0 0 16px; }
+.resultado--ok { border-left-color: var(--salvia); }
+.resultado--error { border-left-color: var(--terracota); }
+.resultado--aviso { border-left-color: var(--terracota-oscura); }
+
+/* ————— «Cómo se compra» ————— */
+.pagar .como h2 { margin-top: 48px; }
+
+/* ————— Alto contraste de Windows ————— */
+@media (forced-colors: active) {
+  .resultado { border: 2px solid CanvasText; }
+  .cargando::before, .btn[aria-busy="true"]::before { border-color: CanvasText; border-right-color: transparent; }
+}
+
+/* ————— Impresión: el resumen sí, los controles no ————— */
+@media print {
+  .cargando, .cambiar, .campo-correo, #c-condiciones, .casilla { display: none !important; }
+  .resultado { background: #fff !important; border: 1pt solid #000; }
+}
