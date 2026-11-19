@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://nsddheueksmwqflutddl.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Tu pago · Arkhé</title>
+<meta name="theme-color" content="#eee8de">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../paginas.css">
+<link rel="stylesheet" href="../pagar/pagar.css">
+<script type="module" src="pago.js"></script>
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="sitio">
+  <div class="sitio-cont">
+    <a class="marca" href="../" aria-label="Arkhé: ir a la portada">ARKHÉ</a>
+    <nav aria-label="Páginas de Arkhé SpA">
+      <a href="../condiciones/">Condiciones</a>
+      <a href="../privacidad/">Privacidad</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" class="hoja pagar pago">
+  <header class="cabeza-doc">
+    <p class="antetitulo">Arkhé SpA · Tu pago</p>
+    <h1 id="titulo" tabindex="-1">Volviste de Mercado Pago</h1>
+  </header>
+
+  <noscript>
+    <div class="recuadro">
+      <p>Si completaste el pago o la suscripción en Mercado Pago, tu licencia se activa sola. Para ver el estado aquí, esta página necesita JavaScript.</p>
+    </div>
+  </noscript>
+
+  <!-- El resultado: lo cambia pago.js según lo que responde consultar-pago (o, sin sesión, según la URL de vuelta) -->
+  <div id="resultado" class="resultado" role="status" aria-live="polite">
+    <p id="texto" class="bajada">Si completaste el pago o la suscripción en Mercado Pago, tu licencia se activa sola.</p>
+    <p id="detalle" hidden></p>
+  </div>
+
+  <p id="consultando" class="estado cargando" hidden>Consultando a Mercado Pago…</p>
+  <p id="sin-red" class="nota" hidden>Sin conexión con el servidor: volvemos a intentar en unos segundos.</p>
+
+  <div class="acciones">
+    <a id="a-pagar" class="btn" href="../pagar/" hidden>Volver a intentarlo</a>
+    <button id="b-consultar" class="btn btn-linea" type="button" hidden>Consultar de nuevo</button>
+    <button id="b-cerrar" class="btn btn-linea" type="button" hidden>Cerrar</button>
+  </div>
+
+  <p id="contacto" hidden>Escríbenos a <!--email_off--><a href="mailto:danielantoniohu98@gmail.com?subject=Consulta%20sobre%20mi%20pago%20de%20Arkh%C3%A9">danielantoniohu98@<wbr>gmail.com</a><!--/email_off--> o por <a href="https://wa.me/56944102485?text=Hola%20Daniel%2C%20tengo%20una%20consulta%20sobre%20mi%20pago%20de%20Arkh%C3%A9.%20El%20correo%20de%20mi%20cuenta%20es%3A%20" target="_blank" rel="noopener">WhatsApp al +56&nbsp;9&nbsp;4410&nbsp;2485<span class="solo-lector"> (se abre en otra pestaña)</span></a>.</p>
+
+  <p class="nota">Ya puedes cerrar esta pestaña.</p>
+</main>
+
+<footer class="pie">
+  <div class="pie-cont">
+    <p><strong>Arkhé SpA</strong> · RUT 78.547.998-K · San Josafat 3375, La Florida, Región Metropolitana · <!--email_off--><a href="mailto:danielantoniohu98@gmail.com">danielantoniohu98@<wbr>gmail.com</a><!--/email_off--> · Teléfono y WhatsApp <a href="tel:+56944102485">+56&nbsp;9&nbsp;4410&nbsp;2485</a></p>
+    <p>Representante legal: Daniel Antonio Henríquez Uribe. Te contactamos al correo de tu cuenta de Arkhé.</p>
+    <nav aria-label="Más páginas">
+      <a href="../condiciones/">Condiciones de compra</a>
+      <a href="../privacidad/">Aviso de privacidad</a>
+      <a href="../">Portada</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
